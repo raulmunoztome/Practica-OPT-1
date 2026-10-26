@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "55685714949",
+    "project_id": "optativa1-62d3f",
+    "storage_bucket": "optativa1-62d3f.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:55685714949:android:cffcca8b351aed1f6e386c",
+        "android_client_info": {
+          "package_name": "cat.insmarianao"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBLFMkIew_wThW3S78BUh6fWtx9Ae7gPh0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:55685714949:android:9c5bb95af0f6302c6e386c",
+        "android_client_info": {
+          "package_name": "cat.institutmarianao"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBLFMkIew_wThW3S78BUh6fWtx9Ae7gPh0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

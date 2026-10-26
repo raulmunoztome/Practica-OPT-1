@@ -10,7 +10,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "cat.insmarianao.optpractica"
+        applicationId = "cat.insmarianao"
         minSdk = 30
         targetSdk = 37
         versionCode = 1
