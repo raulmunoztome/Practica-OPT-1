@@ -8,19 +8,19 @@
     app:layoutDescription="@xml/activity_main_scene"
     tools:context=".MainActivity">
 
-    <LinearLayout
+    <androidx.constraintlayout.motion.widget.MotionLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
         android:orientation="vertical"
         android:padding="16dp"
+        app:layoutDescription="@xml/activity_main_xml_linearlayout_scene"
         app:layout_constraintBottom_toTopOf="@+id/emailEditText"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintVertical_bias="0.179">
 
         <EditText
             android:id="@+id/emailEditText"
@@ -28,8 +28,9 @@
             android:layout_height="wrap_content"
             android:hint="Email"
             app:layout_constraintBottom_toTopOf="@+id/passwordEditText"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintTop_toBottomOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="spread"
+            tools:layout_editor_absoluteX="16dp" />
 
         <EditText
             android:id="@+id/passwordEditText"
@@ -38,17 +39,27 @@
             android:hint="Password"
             android:inputType="textPassword"
             app:layout_constraintBottom_toTopOf="@+id/loginButton"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintTop_toBottomOf="@+id/emailEditText" />
+            app:layout_constraintTop_toBottomOf="@+id/emailEditText"
+            tools:layout_editor_absoluteX="16dp" />
 
         <Button
             android:id="@+id/loginButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Entra en la Nevera 3000 ultraPRO"
-            app:layout_constraintBottom_toTopOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintTop_toBottomOf="@+id/passwordEditText" />
-    </LinearLayout>
+            app:layout_constraintBottom_toTopOf="@+id/botonNuevoUsuario"
+            app:layout_constraintTop_toBottomOf="@+id/passwordEditText"
+            tools:layout_editor_absoluteX="16dp" />
+
+        <Button
+            android:id="@+id/botonNuevoUsuario"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Nuevo Usuario"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/loginButton"
+            app:layout_constraintStart_toStartOf="@+id/loginButton"
+            app:layout_constraintTop_toBottomOf="@+id/loginButton" />
+    </androidx.constraintlayout.motion.widget.MotionLayout>
 
 </androidx.constraintlayout.motion.widget.MotionLayout>
