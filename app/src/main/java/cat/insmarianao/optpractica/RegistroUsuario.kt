@@ -7,7 +7,6 @@ import android.widget.EditText
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.Firebase
-import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.firestore
 
 class RegistroUsuario : AppCompatActivity() {
@@ -35,20 +34,19 @@ class RegistroUsuario : AppCompatActivity() {
     }
 
     fun crearUsuarioAction() {
+
         val nombre: String? = if (nameNewUsuario.text.toString().trim().isEmpty()) null else nameNewUsuario.text.toString().trim()
         val email = emailNewUsuario.text.toString().trim()
-        val contra = passNewUsuario.text.toString().trim()
-        val confirmar = passNewUsuarioConf.text.toString().trim()
 
         //chequeamos el formulario
         if (checkForm()) {
-            val db = Firebase.firestore
+
             val client = hashMapOf(
                 "name" to nombre,
                 "email" to email,
             )
-            //despues de chequar, introducimos los datos del cliente a la BD, (quedaria verificar si ya existe email)
-            dataFirebase(db,client)
+
+            addDataFirebase(client)
 
 
 
@@ -64,7 +62,7 @@ class RegistroUsuario : AppCompatActivity() {
         if (passNewUsuario.text.toString().isEmpty()) {
             passNewUsuario.error = "La contraseña es obligatoria"
             return false
-        } else if (passNewUsuarioConf.text.toString().length < 6) {
+        } else if (passNewUsuario.text.toString().length < 6) {
             passNewUsuario.error = "Mínimo 6 caracteres"
             return false
         }
@@ -75,26 +73,26 @@ class RegistroUsuario : AppCompatActivity() {
         }
         return true
     }
-    private fun dataFirebase(db: FirebaseFirestore, client: HashMap<String, String?>){
+    private fun addDataFirebase(client: HashMap<String, String?>){
+        val db = Firebase.firestore
         db.collection("clients")
-            .document(emailNewUsuario.text.toString().trim())
+            .document("${client.getValue("email")}")
             .get()
             .addOnSuccessListener { documento ->
                 if (documento.exists()) {
                     emailNewUsuario.error = "Este email ya está registrado"
                 } else {
                     db.collection("clients")
-                        .document(emailNewUsuario.text.toString().trim()) // Fem servir l'email com a ID del document
+                        .document("${client.getValue("email")}") // Fem servir l'email com a ID del document
                         .set(client)
                         .addOnSuccessListener {
-                            Log.d("Firestore", "Document saved with ID: ${emailNewUsuario.text.toString()}")
+                            Log.d("Firestore", "Document saved with ID: ${client.getValue("email")}")
                             finish()
                         }
                         .addOnFailureListener { e ->
                             Log.w("Firestore", "Error adding document", e)
                         }
                 }
-                finish()
             }
             .addOnFailureListener { e ->
                 Log.w("Firestore", "Error checking user", e)
