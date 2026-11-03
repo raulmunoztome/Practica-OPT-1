@@ -22,7 +22,8 @@ class MainActivity : AppCompatActivity() {
             loginForm(emailEditText, passwordEditText)
         }
         nuevoButton.setOnClickListener {
-
+            intent = Intent(this, RegistroUsuario::class.java)
+            startActivity(intent)
         }
     }
 
