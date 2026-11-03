@@ -56,6 +56,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Nuevo Usuario"
+            style="@style/Widget.Material3.Button.OutlinedButton"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/loginButton"
             app:layout_constraintStart_toStartOf="@+id/loginButton"

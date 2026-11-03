@@ -7,4 +7,75 @@
     android:layout_height="match_parent"
     tools:context=".ClientsActivity">
 
+    <Spinner
+        android:id="@+id/spinner2"
+        android:layout_width="116dp"
+        android:layout_height="41dp"
+        android:layout_marginStart="15dp"
+        app:layout_constraintStart_toEndOf="@+id/editTextText3"
+        tools:layout_editor_absoluteY="164dp" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Button"
+        app:layout_constraintBottom_toBottomOf="@+id/button3"
+        app:layout_constraintTop_toTopOf="@+id/button3"
+        tools:layout_editor_absoluteX="86dp" />
+
+    <EditText
+        android:id="@+id/editTextText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="text"
+        android:text="Name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="35dp" />
+
+    <EditText
+        android:id="@+id/editTextText2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="text"
+        android:text="Name"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="96dp" />
+
+    <EditText
+        android:id="@+id/editTextText3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="text"
+        android:text="Name"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="160dp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView6"
+        android:layout_width="wrap_content"
+        android:layout_height="365dp"
+        tools:layout_editor_absoluteX="184dp"
+        tools:layout_editor_absoluteY="359dp" />
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Button"
+        tools:layout_editor_absoluteX="248dp"
+        tools:layout_editor_absoluteY="256dp" />
+
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="116dp"
+        android:layout_height="41dp"
+        android:layout_marginStart="15dp"
+        app:layout_constraintStart_toEndOf="@+id/editTextText2"
+        tools:layout_editor_absoluteY="100dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

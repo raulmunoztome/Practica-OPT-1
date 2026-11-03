@@ -2,6 +2,7 @@ package cat.insmarianao.optpractica
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
@@ -61,10 +62,12 @@ class MainActivity : AppCompatActivity() {
                     clientsActivity.putExtra("email", email)
                     startActivity(clientsActivity)
                 } else {
+                    Log.e("FIREBASE_LOGIN", "Error al iniciar sesión", task.exception)
+
                     Toast.makeText(
                         this,
                         "Error: ${task.exception?.message}",
-                        Toast.LENGTH_SHORT
+                        Toast.LENGTH_LONG
                     ).show()
                 }
             }
