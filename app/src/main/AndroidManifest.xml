@@ -29,6 +29,10 @@
             android:name=".RegistroUsuario"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".IngredientesAdapter"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
     </application>
 
 </manifest>
