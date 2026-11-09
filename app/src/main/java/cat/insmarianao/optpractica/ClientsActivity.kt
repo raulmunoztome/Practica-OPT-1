@@ -1,5 +1,6 @@
 package cat.insmarianao.optpractica
 
+import android.app.DatePickerDialog
 import android.os.Bundle
 import android.util.Log
 import android.widget.ArrayAdapter
@@ -15,6 +16,8 @@ import java.util.Collections.emptyList
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.util.Calendar
 
 class ClientsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,13 +41,21 @@ class ClientsActivity : AppCompatActivity() {
             recyclerView.layoutManager = LinearLayoutManager(this)
             recyclerView.adapter = IngredientesAdapter(lista)
         }
+        fun ingredienteCorrecto(): Boolean{
+
+            return true
+        }
         //AÑADIMOS INGREDIENTE A LA BD FIRESTORE
         fun addIngredienteBD(){
-            val fechaC = LocalDate.parse(fechaCad.text.toString())
-            val nomI = nomIng.text.toString()
-            val cantidadIngrediente = cantidad.text.toString().toIntOrNull()
-            val unidadCantidad = spinnerUnidades.selectedItem.toString()
-            val unidadCategoria = spinnerCategorias.selectedItem.toString()
+            if(ingredienteCorrecto()) {
+                val formato = DateTimeFormatter.ofPattern("d/M/yyyy")
+                val fechaC = LocalDate.parse(fechaCad.text.toString(), formato)
+                val nomI = nomIng.text.toString()
+                val cantidadIngrediente = cantidad.text.toString().toIntOrNull()
+                val unidadCantidad = spinnerUnidades.selectedItem.toString()
+                val unidadCategoria = spinnerCategorias.selectedItem.toString()
+                Log.d("DEBUG", "El valor es: $fechaC")
+            }
 
         }
 
@@ -111,11 +122,30 @@ class ClientsActivity : AppCompatActivity() {
 
         //ACCIONES DE BOTONES
         botonLimpiar.setOnClickListener {
+            nomIng.setText("")
+            cantidad.setText("")
+            fechaCad.setText("")
 
+            spinnerUnidades.setSelection(0)
+            spinnerCategorias.setSelection(0)
         }
 
         botonAddIngredient.setOnClickListener {
             addIngredienteBD()
+        }
+        fechaCad.setOnClickListener {
+
+            val calendario = Calendar.getInstance()
+
+            DatePickerDialog(
+                this,
+                { _, year, month, day ->
+                    fechaCad.setText("$day/${month + 1}/$year")
+                },
+                calendario.get(Calendar.YEAR),
+                calendario.get(Calendar.MONTH),
+                calendario.get(Calendar.DAY_OF_MONTH)
+            ).show()
         }
 
 
