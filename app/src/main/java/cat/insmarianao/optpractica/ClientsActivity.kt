@@ -128,6 +128,7 @@ class ClientsActivity : AppCompatActivity() {
 
             spinnerUnidades.setSelection(0)
             spinnerCategorias.setSelection(0)
+            nomIng.requestFocus()
         }
 
         botonAddIngredient.setOnClickListener {

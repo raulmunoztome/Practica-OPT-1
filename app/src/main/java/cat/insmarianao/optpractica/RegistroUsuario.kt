@@ -35,11 +35,6 @@ class RegistroUsuario : AppCompatActivity() {
         val botonVolver = findViewById<Button>(R.id.volverInicio)
 
         botonCrearUsuario.setOnClickListener {
-            Toast.makeText(
-                this,
-                "...Procesando...",
-                Toast.LENGTH_SHORT
-            ).show()
             crearUsuarioAction()
         }
         botonVolver.setOnClickListener {
@@ -59,6 +54,11 @@ class RegistroUsuario : AppCompatActivity() {
 
         //chequeamos el formulario
         if (checkForm()) {
+            Toast.makeText(
+                this,
+                "...Procesando datos...",
+                Toast.LENGTH_SHORT
+            ).show()
             comprobarUsuarios()
         }
     }
