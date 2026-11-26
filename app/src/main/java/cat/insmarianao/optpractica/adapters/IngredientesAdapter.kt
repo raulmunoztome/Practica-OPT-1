@@ -11,6 +11,7 @@ import cat.insmarianao.optpractica.models.Ingrediente
 
 class IngredientesAdapter(
     private val lista: List<Ingrediente>,
+    //unit equivale a void
     private val onEliminarClick: (Ingrediente) -> Unit
 ) : RecyclerView.Adapter<IngredientesAdapter.ViewHolder>() {
 
@@ -35,6 +36,7 @@ class IngredientesAdapter(
         holder.tvNom.text = ingrediente.name
         holder.tvCantidad.text = "${ingrediente.cantidad} ${ingrediente.unidad}"
         holder.tvCategoria.text = ingrediente.categoria
+        //fecha null es posible, mostramos mensaje en vez de "null"
         holder.tvFecha.text = ingrediente.expiration?.toDate()?.let {
             java.text.SimpleDateFormat("dd/MM/yyyy", java.util.Locale.getDefault())
                 .format(it)

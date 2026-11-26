@@ -1,17 +1,23 @@
+
 package cat.insmarianao.optpractica
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Spinner
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import cat.insmarianao.optpractica.adapters.IngredientesAdapter
 import cat.insmarianao.optpractica.models.Ingrediente
+import cat.insmarianao.optpractica.repositories.AuthRepository
 import cat.insmarianao.optpractica.repositories.IngredientesRepository
 import cat.insmarianao.optpractica.utils.DatePickerHelper
 import com.google.firebase.Timestamp
@@ -20,72 +26,46 @@ import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 
 class ClientsActivity : AppCompatActivity() {
+
+    private lateinit var usuarioActivo: String
+    private lateinit var repository: IngredientesRepository
+    private lateinit var authRepository: AuthRepository
+    private lateinit var recyclerView: RecyclerView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_clients)
+        //!! para indicar que no será nulo, ya que el login se encarga de esto
+        usuarioActivo = intent.getStringExtra("email")!!
 
-        val usuarioActivo = intent.getStringExtra("email")
+        // Configuramos la Toolbar
+        val toolbar = findViewById<Toolbar>(R.id.toolbar)
+        setSupportActionBar(toolbar)
+
         val nomIng = findViewById<EditText>(R.id.nombreIngrediente)
         val fechaCad = findViewById<EditText>(R.id.fechaCaducidad)
         val cantidad = findViewById<EditText>(R.id.ingredientesCantidad)
         val spinnerUnidades = findViewById<Spinner>(R.id.spinnerUnidades)
         val spinnerCategorias = findViewById<Spinner>(R.id.spinnerCategoria)
-        val recyclerView = findViewById<RecyclerView>(R.id.recyclerView6)
+        recyclerView = findViewById<RecyclerView>(R.id.recyclerView6)
         val botonAddIngredient = findViewById<Button>(R.id.addIngredients)
         val botonLimpiar = findViewById<Button>(R.id.limpiarForm)
 
-        val repository = IngredientesRepository()
+        //val con la clase de la conex a Firestore
+        repository = IngredientesRepository()
+        authRepository = AuthRepository()
 
-        // PASAMOS LOS DATOS DE FIRESTORE AL ADAPTER DEL RECYCLER
-        fun pintarRecicleView(lista: List<Ingrediente>) {
-            Log.d("FIRESTORE", "Ingredientes: $lista")
-            recyclerView.layoutManager = LinearLayoutManager(this)
+        //pedimos la lista a firestore
+        actualizarIngredientes()
 
-            recyclerView.adapter = IngredientesAdapter(lista) { ingrediente ->
-                repository.eliminarIngrediente(
-                    usuarioActivo.toString(),
-                    ingrediente,
-                    onSuccess = {
-                        Log.d("FIRESTORE", "Ingrediente eliminado correctamente")
-                        Toast.makeText(this, "Ingrediente eliminado correctamente", Toast.LENGTH_SHORT).show()
-
-                        repository.obtenerIngredientes(
-                            usuarioActivo.toString(),
-                            onSuccess = { listaActualizada ->
-                                pintarRecicleView(listaActualizada)
-                            },
-                            onFailure = { error ->
-                                Log.e("FIRESTORE", "Error al actualizar la lista", error)
-                                Toast.makeText(this, "Error al actualizar la lista de ingredientes", Toast.LENGTH_SHORT).show()
-                            }
-                        )
-                    },
-                    onFailure = { error ->
-                        Log.e("FIRESTORE", "Error al eliminar ingrediente", error)
-                        Toast.makeText(this, "Error al eliminar ingrediente", Toast.LENGTH_SHORT).show()
-                    }
-                )
-            }
-        }
-
-        repository.obtenerIngredientes(
-            usuarioActivo.toString(),
-            onSuccess = { lista ->
-                pintarRecicleView(lista)
-            },
-            onFailure = { error ->
-                Log.e("FIRESTORE", "Error al leer", error)
-                Toast.makeText(this, "Error en obtener la lista de ingredientes", Toast.LENGTH_SHORT).show()
-            }
-        )
-
+        //validaciones formulario ingredientes
         fun ingredienteCorrecto(): Boolean {
             if(nomIng.text.trim().isEmpty()){
                 nomIng.error = "Nombre obligatorio"
                 return false
             }
             else if(cantidad.text.trim().isEmpty()){
-                cantidad.error  = "Cantidad obligatoria"
+                cantidad.error = "Cantidad obligatoria"
                 return false
             }
             return true
@@ -116,23 +96,14 @@ class ClientsActivity : AppCompatActivity() {
                 )
 
                 repository.agregarIngrediente(
-                    usuarioActivo.toString(),
+                    usuarioActivo,
                     ingrediente,
                     onSuccess = {
                         Log.d("FIRESTORE", "Ingrediente añadido correctamente")
                         Toast.makeText(this, "Ingrediente añadido correctamente", Toast.LENGTH_SHORT).show()
                         botonLimpiar.performClick()
-
-                        repository.obtenerIngredientes(
-                            usuarioActivo.toString(),
-                            onSuccess = { lista ->
-                                pintarRecicleView(lista)
-                            },
-                            onFailure = { error ->
-                                Log.e("FIRESTORE", "Error al actualizar la lista", error)
-                                Toast.makeText(this, "Error al actualizar la lista de ingredientes", Toast.LENGTH_SHORT).show()
-                            }
-                        )
+                        //pintamos de nuevo la lista al añadir nuevo ingrediente
+                        actualizarIngredientes()
                     },
                     onFailure = { error ->
                         Log.e("FIRESTORE", "Error al añadir ingrediente", error)
@@ -184,5 +155,75 @@ class ClientsActivity : AppCompatActivity() {
             }
             datePicker.mostrarCalendario()
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu_clients, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.menu_cerrar_sesion -> {
+                authRepository.cerrarSesion()
+
+                Toast.makeText(
+                    this,
+                    "Sesión cerrada",
+                    Toast.LENGTH_SHORT
+                ).show()
+
+                val intent = Intent(this, MainActivity::class.java).apply {
+                    flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                }
+                startActivity(intent)
+                true
+            }
+
+            R.id.menu_recetas -> {
+                // Funcionalidad de Gemini pendiente
+                true
+            }
+
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    private fun pintarRecicleView(lista: List<Ingrediente>) {
+        Log.d("FIRESTORE", "Ingredientes: $lista")
+        recyclerView.layoutManager = LinearLayoutManager(this)
+
+        recyclerView.adapter = IngredientesAdapter(lista) { ingrediente ->
+            repository.eliminarIngrediente(
+                usuarioActivo,
+                ingrediente,
+                onSuccess = {
+                    Log.d("FIRESTORE", "Ingrediente eliminado correctamente")
+                    Toast.makeText(this, "Ingrediente eliminado correctamente", Toast.LENGTH_SHORT).show()
+                    actualizarIngredientes()
+                },
+                onFailure = { error ->
+                    Log.e("FIRESTORE", "Error al eliminar ingrediente", error)
+                    Toast.makeText(this, "Error al eliminar ingrediente", Toast.LENGTH_SHORT).show()
+                }
+            )
+        }
+    }
+
+    private fun actualizarIngredientes() {
+        repository.obtenerIngredientes(
+            usuarioActivo,
+            onSuccess = { lista ->
+                pintarRecicleView(lista)
+            },
+            onFailure = { error ->
+                Log.e("FIRESTORE", "Error al actualizar la lista", error)
+                Toast.makeText(
+                    this,
+                    "Error al actualizar la lista de ingredientes",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        )
     }
 }

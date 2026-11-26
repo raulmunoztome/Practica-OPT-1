@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">OPTpractica</string>
+    <string name="app_name">Nevera 3000</string>
     <string name="btn_sumarIngrediente">Añadir ingrediente</string>
     <string name="btn_limpiar">Limpiar</string>
     <string name="campo_ingrediente">Nombre del ingrediente</string>
@@ -13,4 +13,6 @@
     <string name="campo_confirmaPass">Confirma tu contraseña</string>
     <string name="btn_finalizarRegistro">Finalizar registro</string>
     <string name="btn_atras">Volver</string>
+    <string name="menu_recetas">Receta de Gemini</string>
+    <string name="menu_cerrarSesion">Cerrar Sesion</string>
 </resources>

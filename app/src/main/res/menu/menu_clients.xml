@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/menu_recetas"
+        android:title="@string/menu_recetas"
+        android:icon="@drawable/ic_receta"
+        android:contentDescription="@string/menu_recetas"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/menu_cerrar_sesion"
+        android:title="@string/menu_cerrarSesion"
+        android:icon="@drawable/ic_cerrar_sesion"
+        android:contentDescription="@string/menu_cerrarSesion"
+        app:showAsAction="always" />
+
+</menu>

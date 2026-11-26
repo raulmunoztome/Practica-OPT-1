@@ -1,3 +1,4 @@
+
 package cat.insmarianao.optpractica
 
 import android.content.Intent
@@ -7,9 +8,12 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.google.firebase.auth.FirebaseAuth
+import cat.insmarianao.optpractica.repositories.AuthRepository
 
 class MainActivity : AppCompatActivity() {
+
+    private val authRepository = AuthRepository()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -22,8 +26,9 @@ class MainActivity : AppCompatActivity() {
         loginButton.setOnClickListener {
             loginForm(emailEditText, passwordEditText)
         }
+
         nuevoButton.setOnClickListener {
-            intent = Intent(this, RegistroUsuario::class.java)
+            val intent = Intent(this, RegistroUsuario::class.java)
             startActivity(intent)
         }
     }
@@ -50,26 +55,29 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun login(email: String, password: String) {
-        FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    Toast.makeText(
-                        this,
-                        "Welcome ${FirebaseAuth.getInstance().currentUser?.email}",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    val clientsActivity = Intent(this, ClientsActivity::class.java)
-                    clientsActivity.putExtra("email", email)
-                    startActivity(clientsActivity)
-                } else {
-                    Log.e("FIREBASE_LOGIN", "Error al iniciar sesión", task.exception)
+        authRepository.iniciarSesion(
+            email,
+            password,
+            onSuccess = {
+                Toast.makeText(
+                    this,
+                    "Welcome $email",
+                    Toast.LENGTH_SHORT
+                ).show()
 
-                    Toast.makeText(
-                        this,
-                        "Error: ${task.exception?.message}",
-                        Toast.LENGTH_LONG
-                    ).show()
-                }
+                val clientsActivity = Intent(this, ClientsActivity::class.java)
+                clientsActivity.putExtra("email", email)
+                startActivity(clientsActivity)
+            },
+            onFailure = { error ->
+                Log.e("FIREBASE_LOGIN", "Error al iniciar sesión", error)
+
+                Toast.makeText(
+                    this,
+                    "Error: ${error.message}",
+                    Toast.LENGTH_LONG
+                ).show()
             }
+        )
     }
 }
