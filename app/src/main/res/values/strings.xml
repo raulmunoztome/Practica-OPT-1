@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">OPTpractica</string>
+    <string name="btn_sumarIngrediente">Añadir ingrediente</string>
+    <string name="btn_limpiar">Limpiar</string>
+    <string name="campo_ingrediente">Nombre del ingrediente</string>
+    <string name="campo_cantidad">Cantidad</string>
+    <string name="campo_fechaCad">Fecha de caducidad</string>
+    <string name="btn_iniciarSesion">Entrar en Nevera3000</string>
+    <string name="btn_crearUsuario">Crear nuevo usuario</string>
+    <string name="campo_email">Introduce tu email</string>
+    <string name="campo_pass">Introduce tu contraseña</string>
+    <string name="campo_nombreUsuario">Introduce tu nombre</string>
+    <string name="campo_confirmaPass">Confirma tu contraseña</string>
+    <string name="btn_finalizarRegistro">Finalizar registro</string>
+    <string name="btn_atras">Volver</string>
 </resources>
