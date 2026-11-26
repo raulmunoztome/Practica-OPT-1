@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
-    app:cardCornerRadius="12dp">
+    app:cardBackgroundColor="?attr/colorSurfaceContainerHigh"
+    app:cardCornerRadius="10dp">
 
 
     <LinearLayout
@@ -23,12 +24,15 @@
                 android:id="@+id/tvNom"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
                 android:text="TextView" />
 
             <TextView
                 android:id="@+id/tvCantidad"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textStyle="bold"
                 android:text="TextView" />
 
             <TextView
@@ -41,6 +45,7 @@
                 android:id="@+id/tvFecha"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textStyle="italic"
                 android:text="TextView" />
 
         </LinearLayout>
@@ -50,7 +55,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:backgroundTint="?attr/colorError"
+            app:tint="?attr/colorError"
             app:srcCompat="@android:drawable/ic_menu_delete" />
     </LinearLayout>
 
