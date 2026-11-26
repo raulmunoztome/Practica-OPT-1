@@ -80,6 +80,14 @@ class ClientsActivity : AppCompatActivity() {
         )
 
         fun ingredienteCorrecto(): Boolean {
+            if(nomIng.text.trim().isEmpty()){
+                nomIng.error = "Nombre obligatorio"
+                return false
+            }
+            else if(cantidad.text.trim().isEmpty()){
+                cantidad.error  = "Cantidad obligatoria"
+                return false
+            }
             return true
         }
 
@@ -87,17 +95,24 @@ class ClientsActivity : AppCompatActivity() {
         fun addIngredienteBD() {
             if (ingredienteCorrecto()) {
                 val formato = DateTimeFormatter.ofPattern("d/M/yyyy")
-                val fechaC = LocalDate.parse(fechaCad.text.toString(), formato)
+
+                val fechaCaducidad = if (fechaCad.text.isNotBlank()) {
+                    val fechaC = LocalDate.parse(fechaCad.text.toString(), formato)
+
+                    Timestamp(
+                        fechaC.atStartOfDay(ZoneId.systemDefault()).toEpochSecond(),
+                        0
+                    )
+                } else {
+                    null
+                }
 
                 val ingrediente = Ingrediente(
                     name = nomIng.text.toString(),
                     cantidad = cantidad.text.toString().toLong(),
                     unidad = spinnerUnidades.selectedItem.toString(),
                     categoria = spinnerCategorias.selectedItem.toString(),
-                    expiration = Timestamp(
-                        fechaC.atStartOfDay(ZoneId.systemDefault()).toEpochSecond(),
-                        0
-                    )
+                    expiration = fechaCaducidad
                 )
 
                 repository.agregarIngrediente(
