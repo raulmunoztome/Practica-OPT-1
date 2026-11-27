@@ -15,4 +15,5 @@
     <string name="btn_atras">Volver</string>
     <string name="menu_recetas">Receta de Gemini</string>
     <string name="menu_cerrarSesion">Cerrar Sesion</string>
+    <string name="texto_sinFecha">Sin fecha</string>
 </resources>

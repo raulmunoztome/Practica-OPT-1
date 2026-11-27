@@ -10,7 +10,7 @@ import cat.insmarianao.optpractica.R
 import cat.insmarianao.optpractica.models.Ingrediente
 
 class IngredientesAdapter(
-    private val lista: List<Ingrediente>,
+    private var lista: List<Ingrediente>,
     //unit equivale a void
     private val onEliminarClick: (Ingrediente) -> Unit
 ) : RecyclerView.Adapter<IngredientesAdapter.ViewHolder>() {
@@ -40,7 +40,7 @@ class IngredientesAdapter(
         holder.tvFecha.text = ingrediente.expiration?.toDate()?.let {
             java.text.SimpleDateFormat("dd/MM/yyyy", java.util.Locale.getDefault())
                 .format(it)
-        } ?: "Sin fecha"
+        } ?: holder.itemView.context.getString(R.string.texto_sinFecha)//forma de referenciar el texto de strings
 
         holder.botonEliminar.setOnClickListener {
             onEliminarClick(ingrediente)
@@ -48,4 +48,9 @@ class IngredientesAdapter(
     }
 
     override fun getItemCount(): Int = lista.size
+
+    fun actualizarLista(nuevaLista: List<Ingrediente>) {
+        lista = nuevaLista
+        notifyDataSetChanged()
+    }
 }

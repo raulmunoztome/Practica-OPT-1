@@ -31,6 +31,7 @@ class ClientsActivity : AppCompatActivity() {
     private lateinit var repository: IngredientesRepository
     private lateinit var authRepository: AuthRepository
     private lateinit var recyclerView: RecyclerView
+    private lateinit var ingredientesAdapter: IngredientesAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,6 +56,23 @@ class ClientsActivity : AppCompatActivity() {
         repository = IngredientesRepository()
         authRepository = AuthRepository()
 
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        ingredientesAdapter = IngredientesAdapter(emptyList()) { ingrediente ->
+            repository.eliminarIngrediente(
+                usuarioActivo,
+                ingrediente,
+                onSuccess = {
+                    Log.d("FIRESTORE", "Ingrediente eliminado correctamente")
+                    Toast.makeText(this, "Ingrediente eliminado correctamente", Toast.LENGTH_SHORT).show()
+                    actualizarIngredientes()
+                },
+                onFailure = { error ->
+                    Log.e("FIRESTORE", "Error al eliminar ingrediente", error)
+                    Toast.makeText(this, "Error al eliminar ingrediente", Toast.LENGTH_SHORT).show()
+                }
+            )
+        }
+        recyclerView.adapter = ingredientesAdapter
         //pedimos la lista a firestore
         actualizarIngredientes()
 
@@ -191,23 +209,7 @@ class ClientsActivity : AppCompatActivity() {
 
     private fun pintarRecicleView(lista: List<Ingrediente>) {
         Log.d("FIRESTORE", "Ingredientes: $lista")
-        recyclerView.layoutManager = LinearLayoutManager(this)
-
-        recyclerView.adapter = IngredientesAdapter(lista) { ingrediente ->
-            repository.eliminarIngrediente(
-                usuarioActivo,
-                ingrediente,
-                onSuccess = {
-                    Log.d("FIRESTORE", "Ingrediente eliminado correctamente")
-                    Toast.makeText(this, "Ingrediente eliminado correctamente", Toast.LENGTH_SHORT).show()
-                    actualizarIngredientes()
-                },
-                onFailure = { error ->
-                    Log.e("FIRESTORE", "Error al eliminar ingrediente", error)
-                    Toast.makeText(this, "Error al eliminar ingrediente", Toast.LENGTH_SHORT).show()
-                }
-            )
-        }
+        ingredientesAdapter.actualizarLista(lista)
     }
 
     private fun actualizarIngredientes() {
