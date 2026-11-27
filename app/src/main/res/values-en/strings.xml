@@ -1,2 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="app_name">Nevera 3000</string>
+    <string name="btn_sumar_ingrediente">Add ingredient</string>
+    <string name="btn_limpiar">Clear</string>
+    <string name="campo_ingrediente">Ingredient name</string>
+    <string name="campo_cantidad">Quantity</string>
+    <string name="campo_fechaCad">Expiration date</string>
+    <string name="btn_iniciar_sesion">Log in to Nevera3000</string>
+    <string name="btn_crear_usuario">Create new user</string>
+    <string name="campo_email">Enter your email</string>
+    <string name="campo_pass">Enter your password</string>
+    <string name="campo_nombre_usuario">Enter your name</string>
+    <string name="campo_confirma_pass">Confirm your password</string>
+    <string name="btn_finalizar_registro">Complete registration</string>
+    <string name="btn_atras">Back</string>
+    <string name="menu_recetas">Gemini recipe</string>
+    <string name="menu_cerrar_sesion">Log out</string>
+    <string name="texto_sesion_cerrada">Logged out</string>
+    <string name="texto_sin_fecha">No date</string>
+    <string name="texto_usuario_creado">User created successfully</string>
+    <string name="texto_error_usuario_creado">Error creating the user</string>
+    <string name="texto_email_obligatorio">Email is required</string>
+    <string name="texto_pass_obligatoria">Password is required</string>
+    <string name="texto_pass_tamaño_minimo">Password must be at least 6 characters</string>
+    <string name="texto_pass_no_coinciden">The passwords entered DO NOT match</string>
+    <string name="texto_procesando_datos">...Processing data...</string>
+    <string name="texto_error_iniciar_sesion">Error logging in</string>
+    <string name="texto_bievenido">Welcome</string>
+    <string name="texto_ingrediente_eliminado_ok">Ingredient deleted successfully</string>
+    <string name="texto_ingrediente_eliminado_ko">Error deleting the ingredient</string>
+    <string name="texto_ingrediente_añadido_ok">Ingredient added successfully</string>
+    <string name="texto_ingrediente_añadido_ko">Error adding the ingredient</string>
+    <string name="texto_listaIng_actualizada_ok">Ingredients:</string>
+    <string name="texto_listaIng_actualizada_ko">Error updating the ingredient list</string>
+    <string name="texto_nombre_ingrediente_oblg">Ingredient name REQUIRED</string>
+    <string name="texto_cantidad_ingrediente_oblg">Quantity greater than 0 required</string>
+</resources>
