@@ -52,7 +52,7 @@ class ClientsActivity : AppCompatActivity() {
         val botonAddIngredient = findViewById<Button>(R.id.addIngredients)
         val botonLimpiar = findViewById<Button>(R.id.limpiarForm)
 
-        //val con la clase de la conex a Firestore
+        //var con la clase de la conex a Firestore
         repository = IngredientesRepository()
         authRepository = AuthRepository()
 

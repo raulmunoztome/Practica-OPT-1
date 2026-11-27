@@ -12,6 +12,7 @@ import cat.insmarianao.optpractica.models.Ingrediente
 class IngredientesAdapter(
     private var lista: List<Ingrediente>,
     //unit equivale a void
+    //la logica de eliminar
     private val onEliminarClick: (Ingrediente) -> Unit
 ) : RecyclerView.Adapter<IngredientesAdapter.ViewHolder>() {
 
