@@ -1,9 +1,12 @@
 
 package cat.insmarianao.optpractica.repositories
 
+import android.util.Log
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FirebaseFirestore
 import cat.insmarianao.optpractica.models.Ingrediente
+import com.google.firebase.Firebase
+import com.google.firebase.firestore.firestore
 
 class IngredientesRepository {
 
@@ -84,6 +87,33 @@ class IngredientesRepository {
             }
             .addOnFailureListener { error ->
                 onFailure(error)
+            }
+    }
+    fun crearPrimerDocumento(nombre: String?, email: String){
+        val arrayIngredients = mutableListOf<Any>()
+        val client = hashMapOf(
+            "name" to nombre,
+            "email" to email,
+            "ingredients" to arrayIngredients
+
+        )
+        db.collection("clients")
+            .document("$email")
+            .get()
+            .addOnSuccessListener { documento ->
+                db.collection("clients")
+                    .document("$email") // Fem servir l'email com a ID del document
+                    .set(client)
+                    .addOnSuccessListener {
+                        Log.d("Firestore", "Document saved with ID: $email")
+                    }
+                    .addOnFailureListener { e ->
+                        Log.w("Firestore", "Error adding document", e)
+                    }
+
+            }
+            .addOnFailureListener { e ->
+                Log.w("Firestore", "Error checking user", e)
             }
     }
 }

@@ -40,12 +40,12 @@ class MainActivity : AppCompatActivity() {
         var valid = true
 
         if (email.isEmpty()) {
-            emailEditText.error = "El email es obligatorio"
+            emailEditText.error = getString(R.string.texto_email_obligatorio)
             valid = false
         }
 
         if (password.isEmpty()) {
-            passwordEditText.error = "La contraseña es obligatoria"
+            passwordEditText.error = getString(R.string.texto_pass_obligatoria)
             valid = false
         }
 
@@ -56,12 +56,13 @@ class MainActivity : AppCompatActivity() {
 
     private fun login(email: String, password: String) {
         authRepository.iniciarSesion(
+            this,
             email,
             password,
             onSuccess = {
                 Toast.makeText(
                     this,
-                    "Welcome $email",
+                    "${getString(R.string.texto_bievenido)} $email",
                     Toast.LENGTH_SHORT
                 ).show()
 
@@ -70,7 +71,7 @@ class MainActivity : AppCompatActivity() {
                 startActivity(clientsActivity)
             },
             onFailure = { error ->
-                Log.e("FIREBASE_LOGIN", "Error al iniciar sesión", error)
+                Log.e("FIREBASE_LOGIN", getString(R.string.texto_error_iniciar_sesion), error)
 
                 Toast.makeText(
                     this,

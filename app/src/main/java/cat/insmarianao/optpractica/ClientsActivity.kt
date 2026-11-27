@@ -62,13 +62,13 @@ class ClientsActivity : AppCompatActivity() {
                 usuarioActivo,
                 ingrediente,
                 onSuccess = {
-                    Log.d("FIRESTORE", "Ingrediente eliminado correctamente")
-                    Toast.makeText(this, "Ingrediente eliminado correctamente", Toast.LENGTH_SHORT).show()
+                    Log.d("FIRESTORE", getString(R.string.texto_ingrediente_eliminado_ok))
+                    Toast.makeText(this, getString(R.string.texto_ingrediente_eliminado_ok), Toast.LENGTH_SHORT).show()
                     actualizarIngredientes()
                 },
                 onFailure = { error ->
-                    Log.e("FIRESTORE", "Error al eliminar ingrediente", error)
-                    Toast.makeText(this, "Error al eliminar ingrediente", Toast.LENGTH_SHORT).show()
+                    Log.e("FIRESTORE", getString(R.string.texto_ingrediente_eliminado_ko), error)
+                    Toast.makeText(this, getString(R.string.texto_ingrediente_eliminado_ko), Toast.LENGTH_SHORT).show()
                 }
             )
         }
@@ -79,11 +79,11 @@ class ClientsActivity : AppCompatActivity() {
         //validaciones formulario ingredientes
         fun ingredienteCorrecto(): Boolean {
             if(nomIng.text.trim().isEmpty()){
-                nomIng.error = "Nombre obligatorio"
+                nomIng.error = getString(R.string.texto_nombre_ingrediente_oblg)
                 return false
             }
-            else if(cantidad.text.trim().isEmpty()){
-                cantidad.error = "Cantidad obligatoria"
+            else if(cantidad.text.trim().isEmpty() || cantidad.text.trim().toString().toLong().equals(0)){
+                cantidad.error = getString(R.string.texto_cantidad_ingrediente_oblg)
                 return false
             }
             return true
@@ -117,15 +117,15 @@ class ClientsActivity : AppCompatActivity() {
                     usuarioActivo,
                     ingrediente,
                     onSuccess = {
-                        Log.d("FIRESTORE", "Ingrediente añadido correctamente")
-                        Toast.makeText(this, "Ingrediente añadido correctamente", Toast.LENGTH_SHORT).show()
+                        Log.d("FIRESTORE", getString(R.string.texto_ingrediente_añadido_ok))
+                        Toast.makeText(this, getString(R.string.texto_ingrediente_añadido_ok), Toast.LENGTH_SHORT).show()
                         botonLimpiar.performClick()
                         //pintamos de nuevo la lista al añadir nuevo ingrediente
                         actualizarIngredientes()
                     },
                     onFailure = { error ->
-                        Log.e("FIRESTORE", "Error al añadir ingrediente", error)
-                        Toast.makeText(this, "Error al añadir ingrediente", Toast.LENGTH_SHORT).show()
+                        Log.e("FIRESTORE", getString(R.string.texto_ingrediente_añadido_ko), error)
+                        Toast.makeText(this, getString(R.string.texto_ingrediente_añadido_ko), Toast.LENGTH_SHORT).show()
                     }
                 )
             }
@@ -187,7 +187,7 @@ class ClientsActivity : AppCompatActivity() {
 
                 Toast.makeText(
                     this,
-                    "Sesión cerrada",
+                    getString(R.string.texto_sesion_cerrada),
                     Toast.LENGTH_SHORT
                 ).show()
 
@@ -208,7 +208,7 @@ class ClientsActivity : AppCompatActivity() {
     }
 
     private fun pintarRecicleView(lista: List<Ingrediente>) {
-        Log.d("FIRESTORE", "Ingredientes: $lista")
+        Log.d("FIRESTORE", "${getString(R.string.texto_listaIng_actualizada_ok)} $lista")
         ingredientesAdapter.actualizarLista(lista)
     }
 
@@ -219,10 +219,10 @@ class ClientsActivity : AppCompatActivity() {
                 pintarRecicleView(lista)
             },
             onFailure = { error ->
-                Log.e("FIRESTORE", "Error al actualizar la lista", error)
+                Log.e("FIRESTORE", getString(R.string.texto_listaIng_actualizada_ko), error)
                 Toast.makeText(
                     this,
-                    "Error al actualizar la lista de ingredientes",
+                    getString(R.string.texto_listaIng_actualizada_ko),
                     Toast.LENGTH_SHORT
                 ).show()
             }

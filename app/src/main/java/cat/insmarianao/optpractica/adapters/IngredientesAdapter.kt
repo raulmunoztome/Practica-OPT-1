@@ -40,7 +40,7 @@ class IngredientesAdapter(
         holder.tvFecha.text = ingrediente.expiration?.toDate()?.let {
             java.text.SimpleDateFormat("dd/MM/yyyy", java.util.Locale.getDefault())
                 .format(it)
-        } ?: holder.itemView.context.getString(R.string.texto_sinFecha)//forma de referenciar el texto de strings
+        } ?: holder.itemView.context.getString(R.string.texto_sin_fecha)//forma de referenciar el texto de strings
 
         holder.botonEliminar.setOnClickListener {
             onEliminarClick(ingrediente)

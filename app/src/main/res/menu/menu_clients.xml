@@ -11,9 +11,9 @@
 
     <item
         android:id="@+id/menu_cerrar_sesion"
-        android:title="@string/menu_cerrarSesion"
+        android:title="@string/menu_cerrar_sesion"
         android:icon="@drawable/ic_cerrar_sesion"
-        android:contentDescription="@string/menu_cerrarSesion"
+        android:contentDescription="@string/menu_cerrar_sesion"
         app:showAsAction="always" />
 
 </menu>
