@@ -82,7 +82,7 @@ class ClientsActivity : AppCompatActivity() {
                 nomIng.error = getString(R.string.texto_nombre_ingrediente_oblg)
                 return false
             }
-            else if(cantidad.text.trim().isEmpty() || cantidad.text.trim().toString().toLong().equals(0)){
+            else if(cantidad.text.trim().isEmpty() || cantidad.text.trim().toString().toLong() == 0L){
                 cantidad.error = getString(R.string.texto_cantidad_ingrediente_oblg)
                 return false
             }
